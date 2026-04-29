@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>WVSU Connect - Enhanced Learning Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(145deg, #f5e6d3 0%, #f0d9c4 100%);
+            position: relative;
+        }
+
+        /* ============ ENHANCED ANIMATED BACKGROUND ============ */
+        .bg-bubbles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bubble {
+            position: absolute;
+            background: radial-gradient(circle, rgba(27,94,63,0.15), rgba(245,176,66,0.08));
+            border-radius: 50%;
+            animation: floatBubble 12s ease-in-out infinite;
+        }
+
+        .bubble:nth-child(1) { width: 280px; height: 280px; top: -100px; left: -100px; animation-duration: 15s; }
+        .bubble:nth-child(2) { width: 380px; height: 380px; bottom: -150px; right: -150px; animation-duration: 20s; }
+        .bubble:nth-child(3) { width: 200px; height: 200px; top: 35%; right: -50px; animation-duration: 13s; }
+        .bubble:nth-child(4) { width: 150px; height: 150px; bottom: 20%; left: -70px; animation-duration: 10s; }
+        .bubble:nth-child(5) { width: 300px; height: 300px; top: 55%; left: 20%; animation-duration: 22s; }
+        .bubble:nth-child(6) { width: 120px; height: 120px; top: 15%; left: 60%; animation-duration: 8s; }
+
+        @keyframes floatBubble {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-25px, 25px) scale(0.95); }
+            75% { transform: translate(20px, 20px) scale(1.02); }
+        }
+
+        /* Floating particles overlay */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255,215,0,0.3);
+            border-radius: 50%;
+            animation: floatParticle 8s ease-in-out infinite;
+        }
+
+        @keyframes floatParticle {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            50% { transform: translateY(-100px) rotate(180deg); opacity: 0.5; }
+        }
+
+        /* ============ HEADER - ENHANCED ============ */
+        .header {
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 30%, #FFB347 70%, #FFD700 100%);
+            padding: 20px 16px 30px 16px;
+            border-radius: 0 0 50px 50px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(255,107,53,0.4);
+        }
+
+        .header::before {
+            content: "⚡✨";
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 70px;
+            opacity: 0.12;
+            animation: sparkle 3s ease infinite;
+        }
+
+        .header::after {
+            content: "🎓📚";
+            position: absolute;
+            bottom: 5px;
+            left: 20px;
+            font-size: 50px;
+            opacity: 0.1;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.12; }
+            50% { transform: scale(1.2) rotate(10deg); opacity: 0.2; }
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            background: white;
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            animation: bounceLogo 2s ease infinite;
+        }
+
+        @keyframes bounceLogo {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+        }
+
+        .header-sub {
+            font-size: 10px;
+            margin-top: 5px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .header-sub span {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 25px;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+        }
+
+        /* ============ NOTIFICATION BELL ============ */
+        .notification-area {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .bell-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            backdrop-filter: blur(5px);
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .bell-icon:active {
+            transform: scale(0.92);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #FF3366;
+            color: white;
+            font-size: 11px;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 25px;
+            min-width: 22px;
+            text-align: center;
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.5);
+            animation: bellRing 1s ease infinite;
+        }
+
+        @keyframes bellRing {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.05); }
+        }
+
+        /* ============ SDG BANNER - 3D EFFECT ============ */
+        .sdg-banner {
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FF8C00, #FF6B35);
+            margin: -20px 16px 0 16px;
+            padding: 16px 20px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            z-index: 5;
+            box-shadow: 0 15px 30px rgba(255,165,0,0.4);
+            border: 2px solid rgba(255,255,255,0.4);
+            animation: glowPulse 2s ease infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 15px 30px rgba(255,165,0,0.4); }
+            50% { box-shadow: 0 20px 40px rgba(255,165,0,0.6); }
+        }
+
+        .sdg-icon {
+            width: 55px;
+            height: 55px;
+            background: white;
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            animation: iconSpin 3s ease infinite;
+        }
+
+        @keyframes iconSpin {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .sdg-title {
+            font-weight: 900;
+            font-size: 14px;
+            color: #2d1f00;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .sdg-desc {
+            font-size: 10px;
+            color: #4a3a10;
+            margin-top: 3px;
+            font-weight: 600;
+        }
+
+        /* ============ STATUS CARD ============ */
+        .status-card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            margin: 16px;
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,107,53,0.3);
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            background: #00E676;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(0,230,118,0.5);
+            animation: livePulse 1.2s ease infinite;
+        }
+
+        @keyframes livePulse {
+            0% { box-shadow: 0 0 0 0 rgba(0,230,118,0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(0,230,118,0); }
+            100% { box-shadow: 0 0 0 0 rgba(0,230,118,0); }
+        }
+
+        .status-text {
+            font-weight: 800;
+            font-size: 14px;
+            color: #FF6B35;
+        }
+
+        .mode-badge {
+            background: linear-gradient(135deg, #FF6B35, #FFB347);
+            color: white;
+            padding: 7px 18px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(255,107,53,0.3);
+        }
+
+        /* ============ PROFILE CARD ============ */
+        .profile-card {
+            background: white;
+            margin: 0 16px 16px 16px;
+            padding: 18px;
+            border-radius: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid #FFD700;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::before {
+            content: "🌟⭐";
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            font-size: 50px;
+            opacity: 0.1;
+            animation: starRotate 4s linear infinite;
+        }
+
+        @keyframes starRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .profile-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(145deg, #FF6B35, #FFB347, #FFD700);
+            border-radius: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            box-shadow: 0 10px 25px rgba(255,107,53,0.4);
+            animation: avatarGlow 2s ease infinite;
+        }
+
+        @keyframes avatarGlow {
+            0%, 100% { box-shadow: 0 10px 25px rgba(255,107,53,0.4); }
+            50% { box-shadow: 0 15px 35px rgba(255,107,53,0.7); }
+        }
+
+        .student-name {
+            font-weight: 900;
+            font-size: 18px;
+            color: #FF6B35;
+        }
+
+        .student-details {
+            font-size: 11px;
+            color: #8B7355;
+            margin-top: 4px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .saved-stats {
+            background: linear-gradient(135deg, #FF6B35, #FFB347);
+            padding: 10px 18px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(255,107,53,0.3);
+        }
+
+        .saved-number {
+            font-size: 28px;
+            font-weight: 900;
+            color: white;
+        }
+
+        .saved-label {
+            font-size: 10px;
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
+        }
+
+        /* ============ TABS ============ */
+        .tabs-container {
+            margin: 0 16px 16px 16px;
+            background: white;
+            border-radius: 60px;
+            padding: 6px;
+            display: flex;
+            gap: 6px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 13px 6px;
+            border: none;
+            background: none;
+            font-size: 13px;
+            font-weight: 800;
+            color: #A08060;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #FF6B35, #FFB347);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255,107,53,0.3);
+            transform: scale(1.02);
+        }
+
+        /* ============ CONTAINER ============ */
+        .container {
+            padding: 0 16px 90px 16px;
+        }
+
+        /* ============ CARDS ============ */
+        .card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(5px);
+            border-radius: 32px;
+            padding: 22px;
+            margin-bottom: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            border: 1px solid rgba(255,215,0,0.3);
+        }
+
+        .card:active {
+            transform: translateY(-3px);
+        }
+
+        .card-title {
+            font-size: 19px;
+            font-weight: 900;
+            color: #FF6B35;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-left: 14px;
+            border-left: 6px solid #FFD700;
+        }
+
+        /* ============ MODULE ITEMS ============ */
+        .module-item {
+            background: linear-gradient(145deg, #FFF9F0, #FFFAF5);
+            border-radius: 25px;
+            padding: 16px;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            border: 1px solid #FFE0B5;
+        }
+
+        .module-item:hover {
+            transform: translateX(8px);
+            border-color: #FF6B35;
+            box-shadow: 0 8px 20px rgba(255,107,53,0.15);
+        }
+
+        .module-info h4 {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: #4A3728;
+        }
+
+        .module-info p {
+            font-size: 11px;
+            color: #B8956E;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge-downloaded {
+            background: linear-gradient(135deg, #00E676, #00C853);
+            color: white;
+            font-size: 10px;
+            padding: 4px 12px;
+            border-radius: 25px;
+            font-weight: 800;
+            box-shadow: 0 2px 8px rgba(0,200,83,0.3);
+        }
+
+        .btn-download, .btn-open {
+            padding: 11px 24px;
+            border-radius: 40px;
+            border: none;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #FF6B35, #FFB347);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255,107,53,0.3);
+        }
+
+        .btn-download:active {
+            transform: scale(0.95);
+        }
+
+        .btn-open {
+            background: linear-gradient(135deg, #00C853, #00E676);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,200,83,0.3);
+        }
+
+        .btn-open:active {
+            transform: scale(0.95);
+        }
+
+        /* ============ FORM ============ */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #FF6B35;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #FFE0B5;
+            border-radius: 24px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.2s;
+            background: #FFF9F0;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #FF6B35;
+            box-shadow: 0 0 0 4px rgba(255,107,53,0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B35, #FFB347);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 40px;
+            font-weight: 900;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            box-shadow: 0 6px 20px rgba(255,107,53,0.3);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* ============ DEADLINE ITEMS ============ */
+        .deadline-item {
+            padding: 15px;
+            border-left: 6px solid #FFB347;
+            background: #FFF9F0;
+            border-radius: 22px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+
+        .deadline-item.completed {
+            border-left-color: #00E676;
+            background: #F0FFF4;
+        }
+
+        .deadline-item.overdue {
+            border-left-color: #FF3366;
+            background: #FFF0F0;
+        }
+
+        .deadline-title {
+            font-weight: 800;
+            font-size: 15px;
+            color: #4A3728;
+        }
+
+        .deadline-date {
+            font-size: 11px;
+            color: #B8956E;
+            margin-top: 6px;
+        }
+
+        /* ============ PROGRESS BARS ============ */
+        .progress-stat {
+            margin-bottom: 24px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #4A3728;
+        }
+
+        .progress-bar {
+            background: #FFE4C4;
+            border-radius: 30px;
+            height: 12px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #FF6B35, #FFD700);
+            height: 100%;
+            width: 0%;
+            border-radius: 30px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* ============ IMPACT CARD ============ */
+        .impact-card {
+            background: linear-gradient(145deg, #FFF9F0, #FFFAF5);
+            border-radius: 32px;
+            padding: 24px;
+            text-align: center;
+            border: 2px solid #FFD700;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .impact-card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.08), transparent);
+            animation: rotateBg 20s linear infinite;
+        }
+
+        @keyframes rotateBg {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .impact-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============ NOTIFICATION PANEL ============ */
+        .notification-panel {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 360px;
+            height: 100vh;
+            background: white;
+            z-index: 2000;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notification-panel.open {
+            right: 0;
+        }
+
+        .notification-header {
+            background: linear-gradient(135deg, #FF6B35, #FFB347);
+            color: white;
+            padding: 28px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification-header h3 {
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .close-notif {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 26px;
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .close-notif:active {
+            transform: scale(0.95);
+        }
+
+        .notification-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .notification-item {
+            background: #FFF9F0;
+            border-radius: 22px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 5px solid #FFB347;
+            animation: slideInRight 0.3s ease;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .notification-item.urgent {
+            border-left-color: #FF3366;
+            background: #FFF0F0;
+        }
+
+        .notification-title {
+            font-weight: 800;
+            font-size: 14px;
+            color: #4A3728;
+        }
+
+        .notification-message {
+            font-size: 12px;
+            color: #B8956E;
+            margin-top: 5px;
+        }
+
+        .notification-time {
+            font-size: 10px;
+            color: #D4B896;
+            margin-top: 8px;
+        }
+
+        .clear-notif {
+            background: #FFE4C4;
+            border: none;
+            padding: 15px;
+            margin: 16px;
+            border-radius: 30px;
+            font-weight: 800;
+            cursor: pointer;
+            color: #FF6B35;
+            transition: all 0.2s;
+        }
+
+        .clear-notif:active {
+            transform: scale(0.98);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(6px);
+            z-index: 1999;
+            display: none;
+        }
+
+        .overlay.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ============ MODAL ============ */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 40px;
+            max-width: 380px;
+            width: 100%;
+            max-height: 75vh;
+            overflow-y: auto;
+            padding: 28px;
+            animation: zoomIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            color: #FF6B35;
+            border-left: 6px solid #FFD700;
+            padding-left: 15px;
+        }
+
+        .close-modal {
+            background: linear-gradient(135deg, #FF6B35, #FFB347);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 40px;
+            width: 100%;
+            margin-top: 20px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .close-modal:active {
+            transform: scale(0.98);
+        }
+
+        /* ============ TOAST ============ */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #4A3728;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            z-index: 1000;
+            transition: transform 0.2s ease;
+            white-space: nowrap;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ============ EMPTY STATE ============ */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #D4B896;
+        }
+
+        .empty-state .emoji {
+            font-size: 55px;
+            margin-bottom: 12px;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 480px) {
+            .module-item { flex-direction: column; gap: 14px; }
+            .btn-download, .btn-open { width: 100%; text-align: center; }
+            .toast { white-space: normal; text-align: center; max-width: 85%; font-size: 11px; }
+            .header h1 { font-size: 22px; }
+            .student-details { flex-direction: column; gap: 3px; }
+            .profile-left { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Enhanced Animated Background -->
+<div class="bg-bubbles">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+</div>
+<div class="particles">
+    <div class="particle" style="width: 3px; height: 3px; top: 20%; left: 10%; animation-duration: 6s;"></div>
+    <div class="particle" style="width: 4px; height: 4px; top: 60%; left: 85%; animation-duration: 8s;"></div>
+    <div class="particle" style="width: 2px; height: 2px; top: 75%; left: 30%; animation-duration: 5s;"></div>
+</div>
+
+<!-- Notification Panel -->
+<div class="overlay" id="overlay" onclick="closeNotificationPanel()"></div>
+<div class="notification-panel" id="notificationPanel">
+    <div class="notification-header">
+        <h3>🔔 Notifications</h3>
+        <button class="close-notif" onclick="closeNotificationPanel()">✕</button>
+    </div>
+    <div class="notification-list" id="notificationList">
+        <div style="text-align: center; padding: 40px; color: #D4B896;">🔕 No notifications</div>
+    </div>
+    <button class="clear-notif" onclick="clearAllNotifications()">Clear All</button>
+</div>
+
+<!-- Header -->
+<div class="header">
+    <div class="header-top">
+        <div class="logo-area">
+            <div class="logo-icon">🎓</div>
+            <div>
+                <h1>WVSU Connect</h1>
+                <div class="header-sub">
+                    <span>🔥 WVSU - Janiuay</span>
+                    <span>⚡ Real-Time Ready</span>
+                    <span>📱 Offline-First</span>
+                </div>
+            </div>
+        </div>
+        <div class="notification-area" onclick="openNotificationPanel()">
+            <div class="bell-icon">🔔</div>
+            <span class="notification-badge" id="notifCount">0</span>
+        </div>
+    </div>
+</div>
+
+<!-- SDG Banner -->
+<div class="sdg-banner">
+    <div class="sdg-icon">🎯</div>
+    <div class="sdg-text">
+        <div class="sdg-title">SDG 4: QUALITY EDUCATION</div>
+        <div class="sdg-desc">🚀 Inclusive & equitable quality education for all • Learn Anywhere, Anytime</div>
+    </div>
+</div>
+
+<!-- Status Card -->
+<div class="status-card">
+    <div class="status-left">
+        <div class="status-dot"></div>
+        <span class="status-text">🔥 ACTIVE & READY</span>
+    </div>
+    <div class="mode-badge">⚡ OFFLINE-FIRST MODE</div>
+</div>
+
+<!-- Profile Card -->
+<div class="profile-card">
+    <div class="profile-left">
+        <div class="avatar">👩‍🎓</div>
+        <div>
+            <div class="student-name">Mhariz Villado</div>
+            <div class="student-details">
+                <span>BSIT 3-D</span>
+                <span>•</span>
+                <span>CIT 238</span>
+                <span>•</span>
+                <span>2nd Semester SY 2025-2026</span>
+                <span>•</span>
+                <span>Activity No. 2</span>
+            </div>
+        </div>
+    </div>
+    <div class="saved-stats">
+        <div class="saved-number" id="savedCount">0</div>
+        <div class="saved-label">assignments saved</div>
+    </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs-container">
+    <button class="tab active" onclick="showTab('modules')">📚 Modules</button>
+    <button class="tab" onclick="showTab('assignments')">📝 Assignments</button>
+    <button class="tab" onclick="showTab('deadlines')">📅 Deadlines</button>
+    <button class="tab" onclick="showTab('progress')">📊 Progress</button>
+</div>
+
+<!-- Container -->
+<div class="container">
+    <div id="modulesPanel">
+        <div class="card">
+            <div class="card-title">⭐ Available Learning Modules</div>
+            <div id="modulesList"></div>
+        </div>
+        <div class="card">
+            <div class="card-title">📥 My Offline Library</div>
+            <div id="downloadedList"></div>
+        </div>
+    </div>
+
+    <div id="assignmentsPanel" style="display:none;">
+        <div class="card">
+            <div class="card-title">📝 Submit New Assignment</div>
+            <div class="form-group">
+                <label>📌 Assignment Title</label>
+                <input type="text" id="assignTitle" placeholder="e.g., Mobile App Proposal">
+            </div>
+            <div class="form-group">
+                <label>✏️ Your Answer / Submission</label>
+                <textarea id="assignContent" placeholder="Write your answer here..." rows="4"></textarea>
+            </div>
+            <button class="btn-primary" onclick="saveAssignment()">💾 Save Assignment (Offline)</button>
+        </div>
+        <div class="card">
+            <div class="card-title">📋 My Submissions</div>
+            <div id="submissionsList"></div>
+        </div>
+    </div>
+
+    <div id="deadlinesPanel" style="display:none;">
+        <div class="card">
+            <div class="card-title">📅 Upcoming Deadlines</div>
+            <div id="deadlinesList"></div>
+        </div>
+        <div class="card">
+            <div class="card-title">➕ Add New Deadline</div>
+            <div class="form-group">
+                <label>📌 Assignment Name</label>
+                <input type="text" id="newDeadline" placeholder="e.g., Final Project">
+            </div>
+            <div class="form-group">
+                <label>📅 Due Date</label>
+                <input type="date" id="newDueDate">
+            </div>
+            <button class="btn-primary" onclick="addDeadline()">➕ Add Deadline</button>
+        </div>
+    </div>
+
+    <div id="progressPanel" style="display:none;">
+        <div class="card">
+            <div class="card-title">📊 Learning Progress Dashboard</div>
+            <div id="progressStats"></div>
+        </div>
+        <div class="impact-card">
+            <div style="font-size: 55px; margin-bottom: 10px;" id="sdgEmoji">🌱</div>
+            <div style="font-weight: 900; font-size: 22px; color: #FF6B35;" id="sdgTitle">Ready to Learn!</div>
+            <div style="font-size: 13px; color: #B8956E; margin-top: 10px;" id="sdgMessage">Download modules to start your offline learning journey</div>
+            <div style="background: white; border-radius: 25px; padding: 15px; margin-top: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                <div style="font-weight: 900; font-size: 14px; color: #FF6B35;">🌍 SDG Target 4.3</div>
+                <div style="font-size: 12px; color: #B8956E; margin-top: 5px;">Equal access to quality education for all</div>
+                <div style="font-size: 11px; color: #FFD700; margin-top: 8px;">🏆 Your progress contributes to SDG 4!</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="contentModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header" id="modalTitle"></div>
+        <div id="modalBody" style="line-height: 1.6; font-size: 14px;"></div>
+        <button class="close-modal" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script>
+    // ============ MODULE LIBRARY ============
+    const MODULES = [
+        { id: 1, title: '📱 Introduction to Mobile Development', type: 'PDF', size: '2.5MB', downloaded: false, 
+          content: '📱 INTRODUCTION TO MOBILE DEVELOPMENT\n\nMobile application development is creating software for smartphones and tablets.\n\n═══════════════════════════════\n\n📚 TOPICS COVERED:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n• Android & iOS platforms overview\n• Mobile development lifecycle\n• Setting up Android Studio\n• Your first mobile app\n• Emulators vs Real devices\n\n✅ Available OFFLINE after download\n\n💡 Pro Tip: Mobile development is one of the fastest growing fields!' },
+        { id: 2, title: '☕ Java Programming Fundamentals', type: 'PDF', size: '3.1MB', downloaded: false,
+          content: '☕ JAVA PROGRAMMING FUNDAMENTALS\n\nCore Java for Android development.\n\n═══════════════════════════════\n\n📚 TOPICS COVERED:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n• Variables & Data Types\n• Control Flow (if, loops, switch)\n• Object-Oriented Programming\n• Classes & Objects\n• Inheritance & Polymorphism\n• Exception Handling\n\n✅ Available OFFLINE after download' },
+        { id: 3, title: '🎨 UI/UX Design Principles', type: 'PDF', size: '2.8MB', downloaded: false,
+          content: '🎨 UI/UX DESIGN PRINCIPLES\n\nCreating beautiful and usable mobile apps.\n\n═══════════════════════════════\n\n📚 TOPICS COVERED:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n• User-Centered Design Process\n• Wireframing & Prototyping\n• Material Design Guidelines\n• Accessibility in Mobile Apps\n• Usability Testing Methods\n• Color Theory & Typography\n\n✅ Available OFFLINE after download' },
+        { id: 4, title: '🛠️ Android Studio Setup', type: 'PDF', size: '1.5MB', downloaded: false,
+          content: '🛠️ ANDROID STUDIO SETUP GUIDE\n\nComplete installation and configuration guide.\n\n═══════════════════════════════\n\n📚 STEP-BY-STEP:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n1. Download Android Studio from developer.android.com\n2. Run the installer\n3. Select installation components\n4. Configure SDK settings\n5. Set up Android Virtual Device (AVD)\n6. Create your first project\n\n✅ Available OFFLINE after download' },
+        { id: 5, title: '🗄️ SQLite Database', type: 'PDF', size: '2.1MB', downloaded: false,
+          content: '🗄️ SQLITE DATABASE INTEGRATION\n\nLocal database management for mobile apps.\n\n═══════════════════════════════\n\n📚 TOPICS COVERED:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n• Creating databases\n• CRUD Operations (Create, Read, Update, Delete)\n• Using Room Persistence Library\n• Database migrations\n• Query optimization\n• Best practices\n\n✅ Available OFFLINE after download' },
+        { id: 6, title: '🌐 REST API Integration', type: 'PDF', size: '2.4MB', downloaded: false,
+          content: '🌐 REST API INTEGRATION\n\nConnecting your app to web services.\n\n═══════════════════════════════\n\n📚 TOPICS COVERED:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n• Understanding RESTful APIs\n• Making HTTP requests (GET, POST, PUT, DELETE)\n• Parsing JSON responses\n• Error handling & retries\n• Authentication methods (API keys, tokens)\n• Using Retrofit library\n\n✅ Available OFFLINE after download' },
+        { id: 7, title: '🔥 Firebase Integration', type: 'PDF', size: '2.2MB', downloaded: false,
+          content: '🔥 FIREBASE INTEGRATION\n\nGoogle\'s complete mobile development platform.\n\n═══════════════════════════════\n\n📚 TOPICS COVERED:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n• Firebase Authentication\n• Realtime Database\n• Cloud Firestore\n• Cloud Storage\n• Push Notifications\n• Analytics & Crashlytics\n\n✅ Available OFFLINE after download' }
+    ];
+
+    const DEFAULT_DEADLINES = [
+        { id: 'd1', title: '📱 Mobile App Proposal', due: '2026-02-10', course: 'CIT 238', completed: false },
+        { id: 'd2', title: '🎨 UI Design Mockups', due: '2026-02-15', course: 'CIT 238', completed: false },
+        { id: 'd3', title: '🗄️ Database Project', due: '2026-02-20', course: 'CIT 231', completed: false },
+        { id: 'd4', title: '🚀 Final App Prototype', due: '2026-02-28', course: 'CIT 238', completed: false }
+    ];
+
+    // Global State
+    let downloadedModules = [];
+    let submissions = [];
+    let deadlines = [];
+    let notifications = [];
+
+    // ============ NOTIFICATION SYSTEM ============
+    function loadNotifications() {
+        try {
+            let saved = localStorage.getItem('wvsu_notifications_enhanced');
+            if (saved) notifications = JSON.parse(saved);
+            else notifications = [];
+            updateNotificationBadge();
+            renderNotificationList();
+        } catch(e) { notifications = []; }
+    }
+
+    function saveNotifications() {
+        localStorage.setItem('wvsu_notifications_enhanced', JSON.stringify(notifications));
+        updateNotificationBadge();
+    }
+
+    function updateNotificationBadge() {
+        let unreadCount = 0;
+        for (let i = 0; i < notifications.length; i++) {
+            if (!notifications[i].read) unreadCount++;
+        }
+        document.getElementById('notifCount').innerHTML = unreadCount;
+    }
+
+    function addNotification(title, message, isUrgent = false) {
+        const newNotif = {
+            id: Date.now(),
+            title: title,
+            message: message,
+            time: new Date().toLocaleString(),
+            read: false,
+            urgent: isUrgent
+        };
+        notifications.unshift(newNotif);
+        saveNotifications();
+        renderNotificationList();
+        showToastMessage(`🔔 ${title}`);
+        
+        if (isUrgent) {
+            setTimeout(() => {
+                alert(`⚠️ REMINDER: ${title}\n${message}`);
+            }, 300);
+        }
+    }
+
+    function renderNotificationList() {
+        const container = document.getElementById('notificationList');
+        if (notifications.length === 0) {
+            container.innerHTML = '<div style="text-align: center; padding: 40px; color: #D4B896;">🔕 No notifications yet</div>';
+            return;
+        }
+        
+        let html = '';
+        for (let i = 0; i < notifications.length; i++) {
+            const n = notifications[i];
+            html += `
+                <div class="notification-item ${n.urgent ? 'urgent' : ''}" onclick="markNotificationRead('${n.id}')">
+                    <div class="notification-title">${escapeHtml(n.title)}</div>
+                    <div class="notification-message">${escapeHtml(n.message)}</div>
+                    <div class="notification-time">${n.time}</div>
+                </div>
+            `;
+        }
+        container.innerHTML = html;
+    }
+
+    function markNotificationRead(id) {
+        for (let i = 0; i < notifications.length; i++) {
+            if (notifications[i].id == id) {
+                notifications[i].read = true;
+                break;
+            }
+        }
+        saveNotifications();
+        renderNotificationList();
+        updateNotificationBadge();
+    }
+
+    function openNotificationPanel() {
+        document.getElementById('notificationPanel').classList.add('open');
+        document.getElementById('overlay').classList.add('show');
+        for (let i = 0; i < notifications.length; i++) {
+            notifications[i].read = true;
+        }
+        saveNotifications();
+        renderNotificationList();
+        updateNotificationBadge();
+    }
+
+    function closeNotificationPanel() {
+        document.getElementById('notificationPanel').classList.remove('open');
+        document.getElementById('overlay').classList.remove('show');
+    }
+
+    function clearAllNotifications() {
+        notifications = [];
+        saveNotifications();
+        renderNotificationList();
+        showToastMessage('✨ All notifications cleared');
+    }
+
+    function checkDeadlines() {
+        const today = new Date().toISOString().split('T')[0];
+        const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+        
+        for (let i = 0; i < deadlines.length; i++) {
+            const d = deadlines[i];
+            if (d.completed) continue;
+            if (d.due === today) {
+                let alreadyNotified = false;
+                for (let j = 0; j < notifications.length; j++) {
+                    if (notifications[j].title.includes(d.title) && notifications[j].time.includes(today)) {
+                        alreadyNotified = true;
+                        break;
+                    }
+                }
+                if (!alreadyNotified) {
+                    addNotification(`⚠️ Deadline Today!`, `${d.title} is due today for ${d.course}`, true);
+                }
+            } else if (d.due === tomorrow) {
+                let alreadyNotified = false;
+                for (let j = 0; j < notifications.length; j++) {
+                    if (notifications[j].title.includes(d.title) && notifications[j].time.includes(tomorrow)) {
+                        alreadyNotified = true;
+                        break;
+                    }
+                }
+                if (!alreadyNotified) {
+                    addNotification(`📅 Deadline Tomorrow`, `${d.title} is due tomorrow for ${d.course}`, false);
+                }
+            }
+        }
+    }
+
+    // ============ DATA MANAGEMENT ============
+    function loadAllData() {
+        try {
+            let savedDownloads = localStorage.getItem('wvsu_downloads_enhanced');
+            if (savedDownloads) downloadedModules = JSON.parse(savedDownloads);
+            else downloadedModules = [];
+            
+            let savedSubmissions = localStorage.getItem('wvsu_submissions_enhanced');
+            if (savedSubmissions) submissions = JSON.parse(savedSubmissions);
+            else submissions = [];
+            
+            let savedDeadlines = localStorage.getItem('wvsu_deadlines_enhanced');
+            if (savedDeadlines) deadlines = JSON.parse(savedDeadlines);
+            else deadlines = JSON.parse(JSON.stringify(DEFAULT_DEADLINES));
+            
+            updateSavedCount();
+            setTimeout(checkDeadlines, 1000);
+            setInterval(checkDeadlines, 1800000);
+        } catch(e) { 
+            downloadedModules = [];
+            submissions = [];
+            deadlines = JSON.parse(JSON.stringify(DEFAULT_DEADLINES));
+        }
+    }
+
+    function saveAllData() {
+        localStorage.setItem('wvsu_downloads_enhanced', JSON.stringify(downloadedModules));
+        localStorage.setItem('wvsu_submissions_enhanced', JSON.stringify(submissions));
+        localStorage.setItem('wvsu_deadlines_enhanced', JSON.stringify(deadlines));
+    }
+
+    function updateSavedCount() {
+        document.getElementById('savedCount').innerHTML = submissions.length;
+    }
+
+    let toastTimeout = null;
+    function showToastMessage(message) {
+        const toast = document.getElementById('toast');
+        if (toastTimeout) clearTimeout(toastTimeout);
+        toast.textContent = message;
+        toast.classList.add('show');
+        toastTimeout = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 1800);
+    }
+
+    // ============ MODULE FUNCTIONS ============
+    function renderModules() {
+        let modulesHtml = '';
+        for (let i = 0; i < MODULES.length; i++) {
+            const m = MODULES[i];
+            let isDownloaded = false;
+            for (let j = 0; j < downloadedModules.length; j++) {
+                if (downloadedModules[j] === m.id) {
+                    isDownloaded = true;
+                    break;
+                }
+            }
+            modulesHtml += `
+                <div class="module-item">
+                    <div class="module-info">
+                        <h4>${m.title} ${isDownloaded ? '<span class="badge-downloaded">✓ Downloaded ✓ Offline Ready</span>' : ''}</h4>
+                        <p>📄 ${m.type} • ${m.size} • ${isDownloaded ? '✅ Available Offline' : '🌐 Download for Offline Access'}</p>
+                    </div>
+                    ${isDownloaded ? 
+                        `<button class="btn-open" onclick="openModule(${m.id})">📖 Read Offline</button>` :
+                        `<button class="btn-download" onclick="downloadModule(${m.id})">⬇️ Download for Offline</button>`
+                    }
+                </div>
+            `;
+        }
+        document.getElementById('modulesList').innerHTML = modulesHtml;
+        
+        let downloadedHtml = '';
+        let downloadedList = [];
+        for (let i = 0; i < MODULES.length; i++) {
+            for (let j = 0; j < downloadedModules.length; j++) {
+                if (MODULES[i].id === downloadedModules[j]) {
+                    downloadedList.push(MODULES[i]);
+                    break;
+                }
+            }
+        }
+        
+        if (downloadedList.length === 0) {
+            downloadedHtml = '<div class="empty-state"><div class="emoji">📭</div><div>No downloaded modules yet</div><div style="font-size:11px; margin-top:8px;">⬇️ Download modules above to access them OFFLINE!</div></div>';
+        } else {
+            for (let i = 0; i < downloadedList.length; i++) {
+                const m = downloadedList[i];
+                downloadedHtml += `
+                    <div class="module-item">
+                        <div class="module-info">
+                            <h4>${m.title}</h4>
+                            <p>✓ Stored on YOUR DEVICE • ${m.size} • Available OFFLINE</p>
+                        </div>
+                        <button class="btn-open" onclick="openModule(${m.id})">📖 Read Offline</button>
+                    </div>
+                `;
+            }
+        }
+        document.getElementById('downloadedList').innerHTML = downloadedHtml;
+        updateProgress();
+    }
+
+    function downloadModule(id) {
+        let alreadyDownloaded = false;
+        for (let i = 0; i < downloadedModules.length; i++) {
+            if (downloadedModules[i] === id) {
+                alreadyDownloaded = true;
+                break;
+            }
+        }
+        
+        if (!alreadyDownloaded) {
+            downloadedModules.push(id);
+            saveAllData();
+            
+            let module = null;
+            for (let i = 0; i < MODULES.length; i++) {
+                if (MODULES[i].id === id) {
+                    module = MODULES[i];
+                    break;
+                }
+            }
+            
+            if (module) {
+                localStorage.setItem(`module_content_${id}`, module.content);
+                addNotification(`📥 Module Downloaded`, `${module.title} is now available offline! ✅`, false);
+                showToastMessage(`✅ Downloaded: ${module.title} - Available offline!`);
+            }
+            renderModules();
+        }
+    }
+
+    function openModule(id) {
+        let content = localStorage.getItem(`module_content_${id}`);
+        let module = null;
+        for (let i = 0; i < MODULES.length; i++) {
+            if (MODULES[i].id === id) {
+                module = MODULES[i];
+                break;
+            }
+        }
+        
+        if (!content && module) content = module.content;
+        
+        if (content && module) {
+            document.getElementById('modalTitle').innerHTML = `📖 ${module.title}`;
+            document.getElementById('modalBody').innerHTML = `
+                <div style="white-space: pre-line; line-height: 1.7;">${escapeHtml(content)}</div>
+                <div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0); padding:16px; border-radius:24px; margin-top:20px; text-align:center;">
+                    ✅ <strong>OFFLINE ACCESS VERIFIED</strong><br>
+                    This content is stored directly on YOUR device<br>
+                    🌐 Works WITHOUT internet connection!
+                </div>
+            `;
+            document.getElementById('contentModal').classList.add('active');
+        } else {
+            showToastMessage('⚠️ Content not found. Please download the module first.');
+        }
+    }
+
+    // ============ ASSIGNMENT FUNCTIONS ============
+    function saveAssignment() {
+        const title = document.getElementById('assignTitle').value.trim();
+        const content = document.getElementById('assignContent').value.trim();
+        
+        if (!title) { showToastMessage('⚠️ Please enter an assignment title'); return; }
+        if (!content) { showToastMessage('⚠️ Please enter your answer'); return; }
+        
+        const newAssignment = { 
+            id: Date.now(), 
+            title: title, 
+            content: content, 
+            date: new Date().toLocaleString(),
+            timestamp: new Date().toISOString()
+        };
+        submissions.unshift(newAssignment);
+        saveAllData();
+        
+        document.getElementById('assignTitle').value = '';
+        document.getElementById('assignContent').value = '';
+        
+        addNotification(`📝 Assignment Saved`, `"${title}" has been saved to your device`, false);
+        showToastMessage(`✅ "${title}" saved successfully!`);
+        renderSubmissions();
+        updateSavedCount();
+        updateProgress();
+    }
+
+    function renderSubmissions() {
+        let html = '';
+        if (submissions.length === 0) {
+            html = '<div class="empty-state"><div class="emoji">📭</div><div>No submissions yet</div><div style="font-size:11px; margin-top:8px;">📝 Submit your first assignment above!</div></div>';
+        } else {
+            for (let i = 0; i < submissions.length; i++) {
+                const s = submissions[i];
+                html += `
+                    <div class="module-item">
+                        <div class="module-info">
+                            <h4>${escapeHtml(s.title)} <span class="badge-downloaded">✓ Saved Locally</span></h4>
+                            <p>📅 ${s.date}</p>
+                            <p style="font-size:11px; color:#B8956E;">${escapeHtml(s.content.substring(0, 70))}...</p>
+                        </div>
+                        <button class="btn-open" onclick="viewSubmission(${s.id})">👁️ View Full</button>
+                    </div>
+                `;
+            }
+        }
+        document.getElementById('submissionsList').innerHTML = html;
+    }
+
+    function viewSubmission(id) {
+        let sub = null;
+        for (let i = 0; i < submissions.length; i++) {
+            if (submissions[i].id == id) {
+                sub = submissions[i];
+                break;
+            }
+        }
+        
+        if (sub) {
+            document.getElementById('modalTitle').innerHTML = `📝 ${sub.title}`;
+            document.getElementById('modalBody').innerHTML = `
+                <div><strong>📅 Submitted:</strong> ${sub.date}</div>
+                <div style="margin: 15px 0 10px 0;"><strong>✏️ Your Answer:</strong></div>
+                <div style="background:#FFF9F0; padding:20px; border-radius:24px; border:1px solid #FFE0B5; line-height:1.6;">${escapeHtml(sub.content)}</div>
+                <div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0); padding:14px; border-radius:20px; margin-top:16px; text-align:center;">
+                    💾 <strong>Stored on YOUR Device</strong><br>
+                    This assignment is saved locally and will persist even after closing the app
+                </div>
+            `;
+            document.getElementById('contentModal').classList.add('active');
+        }
+    }
+
+    // ============ DEADLINE FUNCTIONS ============
+    function renderDeadlines() {
+        let html = '';
+        const today = new Date().toISOString().split('T')[0];
+        
+        if (deadlines.length === 0) {
+            html = '<div class="empty-state"><div class="emoji">📅</div><div>No deadlines yet</div><div style="font-size:11px; margin-top:8px;">➕ Add a deadline above!</div></div>';
+        } else {
+            for (let i = 0; i < deadlines.length; i++) {
+                const d = deadlines[i];
+                const isOverdue = !d.completed && d.due < today;
+                const isDueToday = !d.completed && d.due === today;
+                html += `
+                    <div class="deadline-item ${d.completed ? 'completed' : ''} ${isOverdue ? 'overdue' : ''}">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div class="deadline-title">${escapeHtml(d.title)} ${isDueToday ? '<span style="color:#FF3366; font-size:12px;"> 🔥 DUE TODAY</span>' : ''}</div>
+                            <button class="btn-download" style="padding:6px 18px; font-size:11px;" onclick="toggleDeadline('${d.id}')">${d.completed ? '↺ Undo' : '✓ Complete'}</button>
+                        </div>
+                        <div class="deadline-date">📅 Due: ${d.due} • ${d.course} ${isOverdue ? '⚠️ OVERDUE - Submit soon!' : ''}</div>
+                    </div>
+                `;
+            }
+        }
+        document.getElementById('deadlinesList').innerHTML = html;
+        updateProgress();
+    }
+
+    function addDeadline() {
+        const title = document.getElementById('newDeadline').value.trim();
+        const due = document.getElementById('newDueDate').value;
+        
+        if (!title) { showToastMessage('⚠️ Please enter assignment name'); return; }
+        if (!due) { showToastMessage('⚠️ Please select a due date'); return; }
+        
+        deadlines.push({ id: Date.now().toString(), title: title, due: due, course: 'CIT 238', completed: false });
+        saveAllData();
+        
+        document.getElementById('newDeadline').value = '';
+        document.getElementById('newDueDate').value = '';
+        
+        addNotification(`📅 New Deadline Added`, `"${title}" due on ${due}`, false);
+        showToastMessage(`✅ Deadline added: "${title}"`);
+        renderDeadlines();
+        checkDeadlines();
+    }
+
+    function toggleDeadline(id) {
+        for (let i = 0; i < deadlines.length; i++) {
+            if (deadlines[i].id === id) {
+                const wasCompleted = deadlines[i].completed;
+                deadlines[i].completed = !deadlines[i].completed;
+                saveAllData();
+                renderDeadlines();
+                if (!wasCompleted && deadlines[i].completed) {
+                    addNotification(`🎉 Deadline Completed!`, `You completed "${deadlines[i].title}"! Great job! 🏆`, false);
+                    showToastMessage(`🎉 Congratulations! Completed "${deadlines[i].title}"`);
+                } else {
+                    showToastMessage(deadlines[i].completed ? `✓ Marked as completed!` : `↺ Reopened: ${deadlines[i].title}`);
+                }
+                updateProgress();
+                break;
+            }
+        }
+    }
+
+    // ============ PROGRESS ============
+    function updateProgress() {
+        const downloadedCount = downloadedModules.length;
+        const totalModules = MODULES.length;
+        const submissionsCount = submissions.length;
+        let completedDeadlines = 0;
+        for (let i = 0; i < deadlines.length; i++) {
+            if (deadlines[i].completed) completedDeadlines++;
+        }
+        const totalDeadlines = deadlines.length;
+        
+        const modulePercent = totalModules > 0 ? (downloadedCount / totalModules * 100).toFixed(0) : 0;
+        const deadlinesPercent = totalDeadlines > 0 ? (completedDeadlines / totalDeadlines * 100).toFixed(0) : 0;
+        const submissionsPercent = Math.min(100, submissionsCount * 14);
+        
+        document.getElementById('progressStats').innerHTML = `
+            <div class="progress-stat">
+                <div class="progress-label">
+                    <span>📚 Offline Modules Downloaded</span>
+                    <span style="color:#FF6B35; font-weight:900;">${downloadedCount}/${totalModules}</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" style="width: ${modulePercent}%;"></div></div>
+                <div style="font-size: 10px; color: #B8956E; margin-top: 6px;">✅ ${downloadedCount} module(s) available OFFLINE on your device</div>
+            </div>
+            <div class="progress-stat">
+                <div class="progress-label">
+                    <span>📝 Assignments Completed</span>
+                    <span style="color:#FF6B35; font-weight:900;">${submissionsCount}</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" style="width: ${submissionsPercent}%;"></div></div>
+                <div style="font-size: 10px; color: #B8956E; margin-top: 6px;">✏️ ${submissionsCount} submission(s) saved locally</div>
+            </div>
+            <div class="progress-stat">
+                <div class="progress-label">
+                    <span>✅ Deadlines Completed</span>
+                    <span style="color:#FF6B35; font-weight:900;">${completedDeadlines}/${totalDeadlines}</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" style="width: ${deadlinesPercent}%;"></div></div>
+                <div style="font-size: 10px; color: #B8956E; margin-top: 6px;">🏆 ${completedDeadlines} deadline(s) completed</div>
+            </div>
+        `;
+        
+        const sdgEmoji = document.getElementById('sdgEmoji');
+        const sdgTitle = document.getElementById('sdgTitle');
+        const sdgMessage = document.getElementById('sdgMessage');
+        
+        if (downloadedCount >= 5) {
+            sdgEmoji.innerHTML = '🏆';
+            sdgTitle.innerHTML = 'Quality Education Champion! 🎉';
+            sdgMessage.innerHTML = `${downloadedCount} modules offline • You're making quality education accessible to all! ⭐`;
+        } else if (downloadedCount >= 3) {
+            sdgEmoji.innerHTML = '⭐';
+            sdgTitle.innerHTML = 'Great Progress! 🚀';
+            sdgMessage.innerHTML = `${downloadedCount} modules downloaded • Keep crushing your learning goals! 💪`;
+        } else if (downloadedCount >= 1) {
+            sdgEmoji.innerHTML = '🌱';
+            sdgTitle.innerHTML = 'Good Start! 🌟';
+            sdgMessage.innerHTML = `${downloadedCount} module(s) offline • You're on the right track to quality education!`;
+        } else {
+            sdgEmoji.innerHTML = '🌱';
+            sdgTitle.innerHTML = 'Ready to Learn? 🎯';
+            sdgMessage.innerHTML = 'Download your first module to unlock offline learning access!';
+        }
+    }
+
+    // ============ UI NAVIGATION ============
+    function showTab(tabName) {
+        document.getElementById('modulesPanel').style.display = 'none';
+        document.getElementById('assignmentsPanel').style.display = 'none';
+        document.getElementById('deadlinesPanel').style.display = 'none';
+        document.getElementById('progressPanel').style.display = 'none';
+        
+        if (tabName === 'modules') document.getElementById('modulesPanel').style.display = 'block';
+        if (tabName === 'assignments') document.getElementById('assignmentsPanel').style.display = 'block';
+        if (tabName === 'deadlines') document.getElementById('deadlinesPanel').style.display = 'block';
+        if (tabName === 'progress') document.getElementById('progressPanel').style.display = 'block';
+        
+        const tabs = document.querySelectorAll('.tab');
+        for (let i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove('active');
+        }
+        event.target.classList.add('active');
+        
+        if (tabName === 'modules') renderModules();
+        if (tabName === 'assignments') renderSubmissions();
+        if (tabName === 'deadlines') renderDeadlines();
+        if (tabName === 'progress') updateProgress();
+    }
+    
+    function closeModal() { 
+        document.getElementById('contentModal').classList.remove('active'); 
+    }
+    
+    function escapeHtml(text) {
+        if (!text) return '';
+        return String(text).replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // ============ INITIALIZE ============
+    loadNotifications();
+    loadAllData();
+    renderModules();
+    renderSubmissions();
+    renderDeadlines();
+    
+    // Brief welcome toast (disappears quickly)
+    setTimeout(() => {
+        showToastMessage('🎓 Welcome to WVSU Connect! Ready for offline learning!');
+    }, 500);
+</script>
+</body>
+</html>
